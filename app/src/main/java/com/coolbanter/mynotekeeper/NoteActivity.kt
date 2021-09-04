@@ -1,13 +1,13 @@
 package com.coolbanter.mynotekeeper
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.content_main.*
 
-class MainActivity : AppCompatActivity() {
+class NoteActivity : AppCompatActivity() {
 
     private var notePosition = POSITION_NOT_SET
 
@@ -18,8 +18,10 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        val adapterCourses = ArrayAdapter(this,
-            android.R.layout.simple_spinner_item, DataManager.courses.values.toList())
+        val adapterCourses = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item, DataManager.courses.values.toList()
+        )
         adapterCourses.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         spinnerCourses.adapter = adapterCourses
@@ -30,8 +32,7 @@ class MainActivity : AppCompatActivity() {
         if (notePosition != POSITION_NOT_SET)
             displayNote()
         else {
-            DataManager.notes.add(NoteInfo())
-            notePosition = DataManager.notes.lastIndex
+            createNewNote()
         }
 
 //        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
@@ -41,6 +42,11 @@ class MainActivity : AppCompatActivity() {
 //            Snackbar.make(view, "Value $originalValue changed to $newValue"
 //                , Snackbar.LENGTH_LONG).show()
 //        }
+    }
+
+    private fun createNewNote() {
+        DataManager.notes.add(NoteInfo())
+        notePosition = DataManager.notes.lastIndex
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -55,6 +61,9 @@ class MainActivity : AppCompatActivity() {
 
         val coursePosition = DataManager.courses.values.indexOf(note.course)
         spinnerCourses.setSelection(coursePosition)
+
+
+
 
 
     }
